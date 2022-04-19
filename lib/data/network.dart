@@ -3,8 +3,9 @@ import 'dart:convert';
 
 class Network {
   final String url;
+  final String url2;
 
-  Network(this.url);
+  Network(this.url, this.url2);
 
   Future<dynamic> getJsonData() async {
     var response = await http.get(Uri.parse(url));
@@ -15,4 +16,15 @@ class Network {
       return "Failed to get data";
     }
   }
+
+  Future<dynamic> getAirData() async {
+    var response = await http.get(Uri.parse(url2 ));
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return "Failed to get data";
+    }
+  }
+
 }

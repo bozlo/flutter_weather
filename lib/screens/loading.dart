@@ -27,14 +27,21 @@ class _LoadingState extends State<Loading> {
     print(longitude);
 
     String url = 'https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric';
-    Network network = Network(url);
+    String url2 = 'https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric';
+    Network network = Network(url, url2);
     var weatherData = await network.getJsonData();
     print(weatherData);
+
+    var airData = await network.getAirData();
+    print(airData);
 
     Navigator.push(context,
         MaterialPageRoute(
             builder: (context) {
-              return WeatherScreen( parseWeatherData: weatherData,);
+              return WeatherScreen(
+                  parseWeatherData: weatherData,
+                  parseAirPollutionData: airData,
+              );
             }
         )
     );
